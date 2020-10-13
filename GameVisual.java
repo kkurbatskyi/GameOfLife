@@ -9,6 +9,9 @@ import java.util.stream.Stream;
 
 class GameVisual extends JComponent
 {
+	private final static int SCREEN_POSITION_X = 3;
+	private final static int SCREEN_POSITION_Y = 3;
+	
 	private final static int GAME_TICK = 10000 / 60;
 	private final static int DRAW_TICK = 1000 / 60;
 	
@@ -22,14 +25,12 @@ class GameVisual extends JComponent
 	
 	public static ArrayList<ArrayList<Cell>> table;
 	public static ArrayList<Cell> cells;
-	public static ArrayList<Cell> liveCell;
-	public static ArrayList<Cell> deadCell;
+	//public static ArrayList<Cell> liveCell;
+	//public static ArrayList<Cell> deadCell;
 	
 	public GameVisual()
 	{
-		
-		//liveCell = new ArrayList<>();
-		//deadCell = new ArrayList<>();
+
 		table = new ArrayList<>();
 		cells = new ArrayList<>();
 		for (int i = 0; i < MAP_WIDTH; i++) {
@@ -43,13 +44,9 @@ class GameVisual extends JComponent
 		tick = new Timer(GAME_TICK, (a) -> this.update());
 		drawTick = new Timer(DRAW_TICK, (a) -> this.drawUpdate());
 		tick.start();
-		//TODO Add listeners
-		/*
-		addKeyListener(new buttonClickListener());*/
 		
+		addKeyListener(new pauseKeyListener());
 		addMouseListener(new drawClickListener());
-		
-		
 	}
 	
 	public void paintComponent(Graphics g)
@@ -59,18 +56,23 @@ class GameVisual extends JComponent
 			RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		paintComponent(g2);
 	}
-	
 	private void paintComponent(Graphics2D g2)
 	{
 		g2.setBackground(Color.lightGray);
 		g2.clearRect(0, 0, this.getWidth(), this.getHeight());
 		g2.setBackground(Color.darkGray);
-		g2.drawLine(0, 95, this.getWidth(), 95);
-		g2.drawLine(295, 95, 295, this.getHeight());
+		//vertical separator line
+		g2.drawLine(MAP_WIDTH * Cell.WIDTH + 2 * SCREEN_POSITION_X, 0, MAP_WIDTH * Cell.WIDTH + 2 * SCREEN_POSITION_X, this.getHeight());
+		//horizontal separator line
+		g2.drawLine(0, MAP_HEIGHT * Cell.HEIGHT + 2 * SCREEN_POSITION_Y,
+						   MAP_WIDTH * Cell.WIDTH + 2 * SCREEN_POSITION_X, MAP_HEIGHT * Cell.HEIGHT + 2 * SCREEN_POSITION_Y);
 		
+		//drawout the screen, cells and markings
+		g2.translate(SCREEN_POSITION_X, SCREEN_POSITION_Y);
 		Stream<Cell> cellStream = cells.stream().sequential();
 		cellStream.forEach(a -> a.draw(g2));
 		drawScreen(g2);
+		g2.translate(-SCREEN_POSITION_X, -SCREEN_POSITION_Y);
 		
 		if (!tick.isRunning()) {
 			Graphics2D g3 = (Graphics2D) g2.create();
@@ -93,7 +95,7 @@ class GameVisual extends JComponent
 	}
 	
 	//public void update(){}
-	public void start()
+	public static void start()
 	{
 		tick.start();
 		if (drawTick.isRunning()) drawTick.stop();
@@ -117,8 +119,11 @@ class GameVisual extends JComponent
 	
 	public static void pause()
 	{
-		tick.stop();
-		if (!drawTick.isRunning()) drawTick.start();
+		if(tick.isRunning()) {
+			tick.stop();
+			if (!drawTick.isRunning()) drawTick.start();
+		}
+		else start();
 	}
 	
 	public static void drawScreen(Graphics2D g2)
@@ -158,12 +163,9 @@ class GameVisual extends JComponent
 	
 	public void update()
 	{
-		//table.get(20).get(20).setColor(Color.BLUE);
-		//table.get(20).get(21).setColor(Color.BLUE);
-		
+
 		ArrayList<ArrayList<Cell>> tableMod = new ArrayList<>();
 		ArrayList<Cell> cellsMod = new ArrayList<>();
-		//for(Cell c : cells){cellsMod.add(c.clone());}
 		
 		for (int i = 0; i < MAP_WIDTH; i++) {
 			tableMod.add(new ArrayList<>());
@@ -217,28 +219,28 @@ class GameVisual extends JComponent
 		@Override
 		public void mouseClicked(MouseEvent e)
 		{
-			if (e.getY() > 500 || e.getX() > 500) {
+			int x = e.getX() - SCREEN_POSITION_X;
+			int y = e.getY() - SCREEN_POSITION_Y;
+			if (x >= 500 || y >= 500) {
 				if (tick.isRunning()) pause();
 				else tick.start();
 				return;
 			}
-			table.get(e.getX() / Cell.HEIGHT).get(e.getY() / Cell.HEIGHT).revive();
+			table.get(x / Cell.HEIGHT).get(y / Cell.HEIGHT).revive();
 		}
-		
-		@Override
-		public void mousePressed(MouseEvent e)
-		{
-			isPressed = true;
-			System.out.println("Pressed");
-		}
-		
-		@Override
-		public void mouseReleased(MouseEvent e)
-		{
-			isPressed = false;
-			System.out.println("Released");
-			
-		}
-		
 	}
+	
+	private static class pauseKeyListener extends KeyAdapter
+	{
+		@Override
+		public void keyPressed(KeyEvent e)
+		{
+			System.out.println("Click!");
+			if(e.getKeyCode() == KeyEvent.VK_SPACE){
+				if (tick.isRunning()) pause();
+				else tick.start();
+			}
+		}
+	}
+	
 }
