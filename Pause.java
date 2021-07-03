@@ -1,11 +1,12 @@
+import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Area;
 import java.awt.geom.Rectangle2D;
 
 public class Pause extends SpriteImpl implements Buttons
 {
-	private final static Color ON = Color.YELLOW;
-	private final static Color OFF = Color.getHSBColor(80, 100, 40);
+	private final static Color OFF = Color.YELLOW;
+	private final static Color ON = Color.getHSBColor(80, 100, 40);
 	private final static float HEIGHT = 25;
 	private boolean status;
 	

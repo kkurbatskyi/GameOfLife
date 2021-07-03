@@ -3,8 +3,8 @@ import java.awt.geom.Ellipse2D;
 
 public class Stop extends SpriteImpl implements Buttons
 {
-	private final static Color ON = Color.RED;
-	private final static Color OFF = Color.getHSBColor(60, 100, 40);
+	private final static Color OFF = Color.RED;
+	private final static Color ON = Color.getHSBColor(60, 100, 40);
 	private final static float RADIUS = 25;
 	private boolean status;
 	

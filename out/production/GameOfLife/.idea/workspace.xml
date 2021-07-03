@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="af5e8613-19ee-4d58-94ac-b1cb9adae496" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1iiHNnvLVi0ebP9iOUxMvogOAcB" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="Downloaded.Files.Path.Enabled" value="false" />
+    <property name="Repository.Attach.Annotations" value="false" />
+    <property name="Repository.Attach.JavaDocs" value="false" />
+    <property name="Repository.Attach.Sources" value="false" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Langtons-Ant" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+  </component>
+  <component name="RunManager">
+    <configuration name="GameWindow" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="GameWindow" />
+      <module name="GameOfLife" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.GameWindow" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="af5e8613-19ee-4d58-94ac-b1cb9adae496" name="Default Changelist" comment="" />
+      <created>1602383455825</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1602383455825</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="549" y="167" key="FileChooserDialogImpl" timestamp="1610256451840">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1610256451840" />
+    <state width="1342" height="111" key="GridCell.Tab.0.bottom" timestamp="1603076823542">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1342" height="111" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1603076823542" />
+    <state width="1342" height="111" key="GridCell.Tab.0.center" timestamp="1603076823541">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1342" height="111" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1603076823541" />
+    <state width="1342" height="111" key="GridCell.Tab.0.left" timestamp="1603076823540">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1342" height="111" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1603076823540" />
+    <state width="1342" height="111" key="GridCell.Tab.0.right" timestamp="1603076823541">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1342" height="111" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1603076823541" />
+    <state width="1342" height="236" key="GridCell.Tab.1.bottom" timestamp="1602485016849">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1342" height="236" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1602485016849" />
+    <state width="1342" height="236" key="GridCell.Tab.1.center" timestamp="1602485016848">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1342" height="236" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1602485016848" />
+    <state width="1342" height="236" key="GridCell.Tab.1.left" timestamp="1602485016848">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1342" height="236" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1602485016848" />
+    <state width="1342" height="236" key="GridCell.Tab.1.right" timestamp="1602485016848">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1342" height="236" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1602485016848" />
+    <state x="117" y="0" key="SettingsEditor" timestamp="1602389559078">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="117" y="0" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1602389559078" />
+    <state x="498" y="301" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD" timestamp="1602648333774">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="498" y="301" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD/0.0.1536.824@0.0.1536.824" timestamp="1602648333774" />
+    <state x="425" y="189" key="run.anything.popup" timestamp="1602445926723">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="425" y="189" key="run.anything.popup/0.0.1536.824@0.0.1536.824" timestamp="1602445926723" />
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1602456455201">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1602456455201" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/GameVisual.java</url>
+          <line>253</line>
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>

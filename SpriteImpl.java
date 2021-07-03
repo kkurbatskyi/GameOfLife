@@ -1,3 +1,4 @@
+import javax.swing.event.MouseInputAdapter;
 import java.awt.*;
 import java.awt.geom.*;
 
@@ -14,10 +15,14 @@ public abstract class SpriteImpl implements Sprite
 		this.fill = fill;
 	}
 	
-	/*protected SpriteImpl(Shape shape, Color fill)
+	/*
+	protected SpriteImpl(Shape shape, Color fill, MouseInputAdapter adapter)
 	{
-		this(shape, fill);
-	}*/
+		this.shape = shape;
+		this.fill = fill;
+	}
+	
+	 */
 	
 	public Shape getShape()
 	{
@@ -37,4 +42,5 @@ public abstract class SpriteImpl implements Sprite
 		g3.draw(this.shape);
 		g3.dispose();
 	}
+	
 }
