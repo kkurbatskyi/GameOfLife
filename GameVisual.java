@@ -1,10 +1,8 @@
 import javax.swing.JComponent;
 import javax.swing.Timer;
-import javax.swing.event.MouseInputAdapter;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.stream.Stream;
 
 class GameVisual extends JComponent
@@ -15,16 +13,22 @@ class GameVisual extends JComponent
 	private final static int GAME_TICK = 10000 / 60;
 	private final static int DRAW_TICK = 1000 / 60;
 	
-	private final static int MAP_WIDTH = 50;
-	private final static int MAP_HEIGHT = 50;
+	private final static int MAP_WIDTH = 51;
+	private final static int MAP_HEIGHT = 51;
 	
 	
 	private static Timer tick;
 	private static Timer drawTick;
 	
 	
-	public static ArrayList<ArrayList<Cell>> table;
-	public static ArrayList<Cell> cells;
+	//public static ArrayList<ArrayList<Cell>> map.table();
+	//public static ArrayList<Cell> map.cells();
+	public static Map map; //draw-screen,
+	public static ArrayList<Map> saves;// 0-3 - Saves
+	public final Point saveDim = new Point(6, 8);
+	
+	//public final ArrayList<Point> savesPos = new ArrayList<Point>();
+	
 	private final static int BUTTON_Y = 50;
 	private final static int BUTTON_X = MAP_WIDTH * Cell.WIDTH + 50;
 
@@ -32,22 +36,22 @@ class GameVisual extends JComponent
 	
 	public GameVisual()
 	{
+		setFocusable(true);
+		
 		button = new ArrayList<>();
 		button.add(new Play(BUTTON_X, BUTTON_Y));
 		button.add(new Pause(BUTTON_X + 100, BUTTON_Y));
 		button.get(1).turnOffOn();
 		button.add(new Stop(BUTTON_X + 200, BUTTON_Y));
-					
-					table = new ArrayList<>();
-		cells = new ArrayList<>();
-		for (int i = 0; i < MAP_WIDTH; i++) {
-			table.add(new ArrayList<>());
-			for (int j = 0; j < MAP_HEIGHT; j++) {
-				Cell newCell = new Cell(i, j);
-				cells.add(newCell);
-				table.get(i).add(newCell);
-			}
+		
+		map = new Map(MAP_WIDTH, MAP_HEIGHT);
+		
+		//TODO: add ability to load save from and into file
+		saves = new ArrayList<>();
+		for(int  i = 0; i < 4; i++){
+			saves.add(new Map(saveDim));
 		}
+		
 		tick = new Timer(GAME_TICK, (a) -> this.update());
 		drawTick = new Timer(DRAW_TICK, (a) -> this.drawUpdate());
 		tick.start();
@@ -75,16 +79,23 @@ class GameVisual extends JComponent
 		g2.drawLine(0, MAP_HEIGHT * Cell.HEIGHT + 2 * SCREEN_POSITION_Y,
 						   MAP_WIDTH * Cell.WIDTH + 2 * SCREEN_POSITION_X, MAP_HEIGHT * Cell.HEIGHT + 2 * SCREEN_POSITION_Y);
 		
+		// 6x8 save-rectangles
+		g2.drawRect(MAP_WIDTH * Cell.WIDTH + 2 * SCREEN_POSITION_X, MAP_HEIGHT * Cell.HEIGHT + 2 * SCREEN_POSITION_Y,6 * Cell.HEIGHT, 8 * Cell.WIDTH);
+		
+		
 		//drawout the screen, cells and markings
 		g2.translate(SCREEN_POSITION_X, SCREEN_POSITION_Y);
-		Stream<Cell> cellStream = cells.stream().sequential();
+		Stream<Cell> cellStream = map.cells().stream().sequential();
 		cellStream.forEach(a -> a.draw(g2));
 		drawScreen(g2);
 		g2.translate(-SCREEN_POSITION_X, -SCREEN_POSITION_Y);
 		
+		//TODO: Make buttons different frames to add Listeners directly to them
 		Stream<Buttons> controls = button.stream().sequential();
 		controls.forEach(a -> a.draw(g2));
 		
+		
+		//Little useless "pause" sign like '||'
 		/*
 		if (!tick.isRunning()) {
 			Graphics2D g3 = (Graphics2D) g2.create();
@@ -107,7 +118,7 @@ class GameVisual extends JComponent
 	}
 	
 	//public void update(){}
-	public static void start()
+	public void start()
 	{
 		tick.start();
 		if (drawTick.isRunning()) drawTick.stop();
@@ -117,22 +128,15 @@ class GameVisual extends JComponent
 	
 	public void stop()
 	{
-		button.get(3).turnOffOn();
+		button.get(2).turnOffOn();
 		tick.stop();
-		table = new ArrayList<>();
-		cells = new ArrayList<>();
-		for (int i = 0; i < MAP_WIDTH; i++) {
-			table.add(new ArrayList<>());
-			for (int j = 0; j < MAP_HEIGHT; j++) {
-				Cell newCell = new Cell(i, j);
-				cells.add(newCell);
-				table.get(i).add(newCell);
-			}
-		}
+		
+		map = new Map(map.getDimensions());
+		repaint();
 	}
 	
 	
-	public static void pause()
+	public void pause()
 	{
 		if(tick.isRunning()) {
 			tick.stop();
@@ -159,7 +163,9 @@ class GameVisual extends JComponent
 		}
 	}
 	
-	/*public static void drawStop(Graphics2D g2){
+	//TODO: Save drawing: the save-boxes, save maps
+	/*
+	public static void drawSave(Graphics2D g2){
 		g2.setColor(Color.GRAY);
 		for(int i = 1; i < MAP_WIDTH; i++) {
 			if(i % 3 == 0)g2.setColor(Color.DARK_GRAY);
@@ -187,7 +193,7 @@ class GameVisual extends JComponent
 		for (int i = 0; i < MAP_WIDTH; i++) {
 			tableMod.add(new ArrayList<>());
 			for (int j = 0; j < MAP_HEIGHT; j++) {
-				Cell cell = table.get(i).get(j);
+				Cell cell = map.table().get(i).get(j);
 				Cell newCell = new Cell(cell.positionX, cell.positionY, cell.live);
 				int neighbours = this.countNeighbours(cell.positionX, cell.positionY);
 				if (cell.isAlive()) {
@@ -200,8 +206,8 @@ class GameVisual extends JComponent
 			}
 		}
 		
-		table = tableMod;
-		cells = cellsMod;
+		map.setTable(tableMod);
+		map.setCells(cellsMod);
 		
 		repaint();
 	}
@@ -221,7 +227,7 @@ class GameVisual extends JComponent
 		try {
 			for (int i = x - 1; i <= x + 1; i++) {
 				for (int j = y - 1; j <= y + 1; j++) {
-					if (!(i == x && j == y) && table.get(i).get(j).isAlive()) counter++;
+					if (!(i == x && j == y) && map.table().get(i).get(j).isAlive()) counter++;
 				}
 			}
 		} catch (IndexOutOfBoundsException e) {
@@ -229,19 +235,19 @@ class GameVisual extends JComponent
 		return counter;
 	}
 	
-	private static class drawClickListener extends MouseAdapter
+	private class drawClickListener extends MouseAdapter
 	{
 		@Override
-		public void mouseReleased(MouseEvent e)
+		public void mousePressed(MouseEvent e)
 		{
 			//pause if clicked off map. start if clicked again
 			int x = e.getX() - SCREEN_POSITION_X;
 			int y = e.getY() - SCREEN_POSITION_Y;
-			if (x >= 500 || y >= 500) {
+			if (x >= MAP_WIDTH * Cell.HEIGHT || y >= MAP_HEIGHT * Cell.HEIGHT) {
 				pause();
 			}
-			else {
-				Cell clicked = table.get(x / Cell.HEIGHT).get(y / Cell.HEIGHT);
+			else if(x > 0 && y > 0){
+				Cell clicked = map.table().get(x / Cell.HEIGHT).get(y / Cell.HEIGHT);
 				//if alive - kill, if dead - revive. Removed unwanted cells from the drawing
 				if(!clicked.isAlive())clicked.revive();
 				else
@@ -255,21 +261,23 @@ class GameVisual extends JComponent
 		{
 				int x = e.getX() - SCREEN_POSITION_X;
 				int y = e.getY() - SCREEN_POSITION_Y;
-				if (!(x >= 500 || y >= 500)) {
-					Cell clicked = table.get(x / Cell.HEIGHT).get(y / Cell.HEIGHT);
+				if (!(x >= MAP_WIDTH * Cell.HEIGHT || y >= MAP_HEIGHT * Cell.HEIGHT) && x > 0 && y > 0) {
+					Cell clicked = map.table().get(x / Cell.HEIGHT).get(y / Cell.HEIGHT);
 					if (!clicked.isAlive()) clicked.revive();
 				}
 		}
 	}
 	
-	private static class pauseKeyListener extends KeyAdapter
+	private class pauseKeyListener extends KeyAdapter
 	{
 		@Override
 		public void keyPressed(KeyEvent e)
 		{
-			System.out.println("Click!");
-			if(e.getKeyCode() == KeyEvent.VK_ENTER){
+			if(e.getKeyCode() == KeyEvent.VK_SPACE){
 				pause();
+			}
+			else if(e.getKeyCode() == KeyEvent.VK_R){
+				stop();
 			}
 		}
 		
