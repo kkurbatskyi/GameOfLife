@@ -7,7 +7,7 @@ class GameWindow extends JFrame{
 	public final static int WIDTH = 820;
 	
 	public GameWindow() {
-		setResizable(false);
+		setResizable(true);
 		visual = new GameVisual();
 		setContentPane(visual);
 	}
