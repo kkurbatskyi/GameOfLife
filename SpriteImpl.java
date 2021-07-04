@@ -15,15 +15,6 @@ public abstract class SpriteImpl implements Sprite
 		this.fill = fill;
 	}
 	
-	/*
-	protected SpriteImpl(Shape shape, Color fill, MouseInputAdapter adapter)
-	{
-		this.shape = shape;
-		this.fill = fill;
-	}
-	
-	 */
-	
 	public Shape getShape()
 	{
 		return shape;
