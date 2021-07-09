@@ -55,6 +55,7 @@ class GameVisual extends JComponent
 		tick = new Timer(GAME_TICK, (a) -> this.update());
 		drawTick = new Timer(DRAW_TICK, (a) -> this.drawUpdate());
 		tick.start();
+		pause();
 		
 		this.addKeyListener(new pauseKeyListener());
 		this.addMouseListener(new drawClickListener());
